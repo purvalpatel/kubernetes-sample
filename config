@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Config
+clusters:
+- name: kubernetes
+  cluster:
+    server: https://kube.nuvoai.io
+    insecure-skip-tls-verify: true
+
+contexts:
+- name: dev-context
+  context:
+    cluster: kubernetes
+    namespace: dev
+    user: dev
+
+current-context: dev-context
+
+users:
+- name: dev
+  user:
+    token: <token>
