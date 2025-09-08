@@ -3,16 +3,16 @@ Kubernetes cluster contains two types of resources:
 #### 1.Control plane		
 cordinates the cluster ( responsible for managing cluster)
 
-- Cloud-Controller-manager & Cloud provider API:
-          The Cloud Provider API provides hooks for Kubernetes to request resources from the cloud, such as: Nodes, Loadbalanceres, Volumes, Route & networking.
+- Cloud-Controller-manager & Cloud provider API:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Cloud Provider API provides hooks for Kubernetes to request resources from the cloud, such as: Nodes, Loadbalanceres, Volumes, Route & networking.
 - etcd:<br>
-          Key-value database
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Key-value database
 - Kube-api-server:<br>
-          Frontend for kubernetes control plane
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Frontend for kubernetes control plane
 - Kube-Scheduler:<br>
-          Schedule pod on node.
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Schedule pod on node.
 - Kube-controller-manager  :<br>
-          Runs controller process. there are three different types of controllers. </br>
+  &nbsp;&nbsp;Runs controller process. there are three different types of controllers. </br>
           - Node controller: Responsible for noticing and responding when nodes go down. </br>
           - Job controller: Watches for Job objects that represent one-off tasks, then creates Pods to run those tasks to completion. </br>
           - EndpointSlice controller: Populates EndpointSlice objects (to provide a link between Services and Pods). </br>
