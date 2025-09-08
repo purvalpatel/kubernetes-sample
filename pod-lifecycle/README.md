@@ -1,3 +1,10 @@
+#### How to check pod status:
+```
+kubectl get pods
+kubectl get pods -A
+kubectl get pods -n <namespace>
+```
+
 🔵 1. 𝗣𝗲𝗻𝗱𝗶𝗻𝗴 – 𝗧𝗵𝗲 𝗕𝗶𝗿𝘁𝗵 👶
 Kubernetes is setting up everything for your Pod—finding the right node, allocating resources, and preparing the environment.
 
