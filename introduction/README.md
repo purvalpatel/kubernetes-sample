@@ -5,11 +5,11 @@ cordinates the cluster ( responsible for managing cluster)
 
 - Cloud-Controller-manager & Cloud provider API:
           The Cloud Provider API provides hooks for Kubernetes to request resources from the cloud, such as: Nodes, Loadbalanceres, Volumes, Route & networking.
-- etcd:
+- etcd:<br>
           Key-value database
-- Kube-api-server:
+- Kube-api-server:<br>
           Frontend for kubernetes control plane
-- Kube-Scheduler:
+- Kube-Scheduler:<br>
           Schedule pod on node.
 - Kube-controller-manager  :<br>
           Runs controller process. there are three different types of controllers. </br>
