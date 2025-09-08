@@ -4,6 +4,8 @@ kubectl get pods
 kubectl get pods -A
 kubectl get pods -n <namespace>
 ```
+<img width="925" height="774" alt="image" src="https://github.com/user-attachments/assets/eaf6ebfe-4e45-470d-8426-999cfddcbb1d" />
+
 
 🔵 1. 𝗣𝗲𝗻𝗱𝗶𝗻𝗴 – 𝗧𝗵𝗲 𝗕𝗶𝗿𝘁𝗵 👶
 Kubernetes is setting up everything for your Pod—finding the right node, allocating resources, and preparing the environment.
