@@ -3,12 +3,11 @@ Kubernetes cluster contains two types of resources:
 #### 1.Control plane		
 cordinates the cluster ( responsible for managing cluster)
 
-- Cloud-Controller-manager
-- Etcd
+- Cloud-Controller-manager & Cloud provider API : The Cloud Provider API provides hooks for Kubernetes to request resources from the cloud, such as: Nodes, Loadbalanceres, Volumes, Route & networking.
+- etcd    :  Key-value database
 - Kube-api-server
 - Kube-Scheduler
 - Kube-controller-manager
-- Cloud provider API - The Cloud Provider API provides hooks for Kubernetes to request resources from the cloud, such as: Nodes, Loadbalanceres, Volumes, Route & networking
 
 #### 2.Nodes				
 workers that run the application	(VM or physical machine )
