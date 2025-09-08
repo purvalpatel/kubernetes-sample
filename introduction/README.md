@@ -8,13 +8,13 @@ cordinates the cluster ( responsible for managing cluster)
 - Kube-api-server
 - Kube-Scheduler
 - Kube-controller-manager
+- Cloud provider API - The Cloud Provider API provides hooks for Kubernetes to request resources from the cloud, such as: Nodes, Loadbalanceres, Volumes, Route & networking
 
 #### 2.Nodes				
 workers that run the application	(VM or physical machine )
 
 - Kubelet - each node as agent to managing the node.
 - Containerd - tool for managing the containers on worker node.
-
 
 ##### Key concepts:
 
@@ -26,5 +26,3 @@ workers that run the application	(VM or physical machine )
 - Namespace			- Virtual cluster inside the kubernetes cluster
 
 <img width="1402" height="882" alt="image" src="https://github.com/user-attachments/assets/27fc321d-490a-4ea1-93df-3c9e227beeff" />
-
-- Cloud provider API - The Cloud Provider API provides hooks for Kubernetes to request resources from the cloud, such as: Nodes, Loadbalanceres, Volumes, Route & networking
