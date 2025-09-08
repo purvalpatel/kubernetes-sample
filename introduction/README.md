@@ -3,15 +3,20 @@ Kubernetes cluster contains two types of resources:
 #### 1.Control plane		
 cordinates the cluster ( responsible for managing cluster)
 
-- Cloud-Controller-manager & Cloud provider API : The Cloud Provider API provides hooks for Kubernetes to request resources from the cloud, such as: Nodes, Loadbalanceres, Volumes, Route & networking.
-- etcd    :  Key-value database
-- Kube-api-server    : Frontend for kubernetes control plane
-- Kube-Scheduler    : Schedule pod on node.
-- Kube-controller-manager  : Runs controller process. there are three different types of controllers. </br>
-                            - Node controller: Responsible for noticing and responding when nodes go down. </br>
-                            - Job controller: Watches for Job objects that represent one-off tasks, then creates Pods to run those tasks to completion. </br>
-                            - EndpointSlice controller: Populates EndpointSlice objects (to provide a link between Services and Pods). </br>
-                            - ServiceAccount controller: Create default ServiceAccounts for new namespaces. </br>
+- Cloud-Controller-manager & Cloud provider API:
+          The Cloud Provider API provides hooks for Kubernetes to request resources from the cloud, such as: Nodes, Loadbalanceres, Volumes, Route & networking.
+- etcd:
+          Key-value database
+- Kube-api-server:
+          Frontend for kubernetes control plane
+- Kube-Scheduler:
+          Schedule pod on node.
+- Kube-controller-manager  :<br>
+          Runs controller process. there are three different types of controllers. </br>
+          - Node controller: Responsible for noticing and responding when nodes go down. </br>
+          - Job controller: Watches for Job objects that represent one-off tasks, then creates Pods to run those tasks to completion. </br>
+          - EndpointSlice controller: Populates EndpointSlice objects (to provide a link between Services and Pods). </br>
+          - ServiceAccount controller: Create default ServiceAccounts for new namespaces. </br>
 
 #### 2.Nodes				
 workers that run the application	(VM or physical machine )
