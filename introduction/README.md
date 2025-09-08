@@ -7,11 +7,11 @@ cordinates the cluster ( responsible for managing cluster)
 - etcd    :  Key-value database
 - Kube-api-server
 - Kube-Scheduler
-- Kube-controller-manager  : Runs controller process. there are three different types of controllers.
-                            - Node controller: Responsible for noticing and responding when nodes go down.
-                            - Job controller: Watches for Job objects that represent one-off tasks, then creates Pods to run those tasks to completion.
-                            - EndpointSlice controller: Populates EndpointSlice objects (to provide a link between Services and Pods).
-                            - ServiceAccount controller: Create default ServiceAccounts for new namespaces.
+- Kube-controller-manager  : Runs controller process. there are three different types of controllers. </br>
+                            - Node controller: Responsible for noticing and responding when nodes go down. </br>
+                            - Job controller: Watches for Job objects that represent one-off tasks, then creates Pods to run those tasks to completion. </br>
+                            - EndpointSlice controller: Populates EndpointSlice objects (to provide a link between Services and Pods). </br>
+                            - ServiceAccount controller: Create default ServiceAccounts for new namespaces. </br>
 
 #### 2.Nodes				
 workers that run the application	(VM or physical machine )
