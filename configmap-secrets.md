@@ -54,7 +54,7 @@ Now container will see,<br>
 /etc/config/APP_DEBUG** <br>
 
 ### 3.Use specific keys as individual Env Vars:
-```
+```YAML
 env:
   - name: APP_ENV
     valueFrom:
@@ -119,7 +119,7 @@ Use below commands to encode and decode the password: <br>
 ### Ways to use secrets in pods:
 
 #### 1.As Environment variables:
-```
+```YAML
 env:
   - name: DB_USER
     valueFrom:
@@ -134,7 +134,7 @@ env:
 ```
 
 #### 2.As Mounted files:
-```
+```YAML
 volumeMounts:
   - name: secret-vol
     mountPath: "/etc/secrets"
@@ -151,17 +151,17 @@ Inside the pods you will have files,<br>
 
 
 #### Create secrets manually:
-```
+```BASH
 kubectl create secret generic my-secret \
   --from-literal=username=admin \
   --from-literal=password=password
 ```
 
 View secret:
-```
+```BASH
 kubectl get secret
 ```
 To decode:
-```
+```BASH
 kubectl get secret my-secret -o jsonpath="{.data.username}" | base64 --decode
 ```
