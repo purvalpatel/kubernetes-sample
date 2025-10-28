@@ -1,4 +1,4 @@
-config maps:
+configmaps:
 ------------
 
 - Configuration data.
