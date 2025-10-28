@@ -139,6 +139,47 @@ Kuberenetes can use below runtimes:
 1. Containerd
 2. CRI-O
 
+#### How to get the Kubernetes token for joining nodes (if lost):
+
+Command for joining nodes:
+```
+kubeadm join 10.10.110.22:6443 --token 8k5elt.852433dupe8bp53o \ --discovery-token-ca-cert-hash sha256:2ca59e3405dec39af108c05015630e27d478c454fd1b7d7c8d38573f76b4b356 
+```
+
+#### List existing token:
+```
+kubeadm token list
+```
+
+If no token found then create new,
+```
+kubeadm token create
+```
+
+To get with full join command,
+```
+kubeadm token create --print-join-command
+```
+
+Get the ca-cert-hash:
+```
+openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | \
+openssl rsa -pubin -outform DER 2>/dev/null | \
+sha256sum | awk '{print $1}'
+```
+This will show the token.
+
+
+Get the kubeadm server URL:
+```
+kubectl config view -o yaml | grep -i server
+```
+
+So the final command for join cluster is:
+```
+kubeadm join 10.10.20.37:6443 --token estw9q.qryflwiss25nnxxm \ --discovery-token-ca-cert-hash sha256:2ca59e3405dec39af108c05015630e27d478c454fd1b7d7c8d38573f76b4b356 
+```
+
 Contexts:
 ---------
 
@@ -159,7 +200,7 @@ kubectl config set-context my-context --namespace=mystuff
 kubectl config get-contexts
 ```
 
-Users in kubernetes:
+### Users in kubernetes:
 
 Kubernetes does not store users inside the cluster. Like, there is no users like other service.
 
