@@ -1,8 +1,11 @@
-Each pod have IP address assigned. When new pod is created then new ip is assigned 	to them. <br>
-So here service comes into the picture,<br>
-Like, <br>
-assign permenant IP address to Pod.<br>
-Also helps in load balancing.<br>
+Kubernetes services:
+------------------
+
+When you create pod, it get its own IP address - but when it restarted or moved to another node it gets changed. <br>
+➡️ That's problem if other pods needs to connects to it.
+
+✅ So, a Service gives a **stable name and IP address** that always points to the right Pod(s), even if they restart or move. <br>
+also, helps in load balancing.<br>
 
 Internet ---> Service ---> Pod1-Pod2-Pod3 <br>
 
@@ -23,18 +26,18 @@ Types of services:
 
 ## 1.ClusterIP 		
 
-Expose an application of cluster to other parts of cluster.<br>
-Allows internal Applications communication with each other.<br>
-It Assigns a uniq range of IP address from the clusters address 	range.<br>
+- Expose an application of cluster to other parts of cluster.<br>
+- Allows internal Applications communication with each other.<br>
+- It Assigns a uniq range of IP address from the clusters address 	range.<br>
 
+**Not Externally Accessible.<br>**
 
-Not Externally Accessible.<br>
+- Internal load balancer between pods.<br>
 
-Internal load balancer between pods.<br>
+ClusterIP is **default service**. If we did not define type in yaml, then it will take default service.
 
-ClusterIP is default service. If we did not define Type in yaml 	then it will take default service.
+cluster_ip.yaml
 
-YAML file: clusterip.yaml
 ```YAML
 apiVersion: v1
 kind: Service
@@ -64,13 +67,13 @@ Node IP + Port <br>
 - Expose app running in kubernetes cluster to outside world, using static port on each node.
 
 
-How it works ?<br>
+**How it works ?<br>**
 Pod - where your app runs<br>
 ClusterIP - load balancer between pods<br>
 NodePort - opens port on each node so you can access the app from outside.<br>
 
 
-Sample: deployment.yaml
+deployment.yaml
 ```YAML
 apiVersion: apps/v1
 kind: Deployment
@@ -91,7 +94,9 @@ spec:
           image: nginx  # example app
           ports:
             - containerPort: 80
-
+```
+nodeport-service.yaml
+```
 Service : Nodeportservice.yaml
 apiVersion: v1
 kind: Service
@@ -110,7 +115,7 @@ spec:
 Apply:
 ```BASH
 kubectl apply -f deployment.yaml
-kubectl apply -f service.yaml
+kubectl apply -f nodeport-service.yaml
 ```
 
 List services from all namespaces:
@@ -122,12 +127,13 @@ kubectl get svc --all-namespaces
 Here, 31000 is external NodePort which is accessible from internet.<br>
 
 ## 3.Loadbalancer:
+
 - Exposes your application externally using a cloud providers external load balancer like. ELB.<br>
-It automatically assigns public IP and routes traffic to your apps backend pod.<br>
+- It automatically assigns public IP and routes traffic to your apps backend pod.<br>
 
 - internally it uses nodeport under the hood.	
 
-Loadbalancer.yaml:
+loadbalancer.yaml:
 ```YAML
 apiVersion: v1
 kind: Service
@@ -154,7 +160,7 @@ kubectl get svc my-app-lb
 
 Get the IP of service:
 ```
-kubectl get svc minio-service  --namespace minio-chennai
+kubectl get svc <service-name>  --namespace minio-chennai
 ```
 
 Get all the service with loadbalancer service type:
@@ -163,7 +169,6 @@ kubectl get svc --all-namespaces --field-selector spec.type=LoadBalancer
 ```
 
 ## 4.ExternalName:
-
 
 Maps the services to external DNS name.<br>
 
