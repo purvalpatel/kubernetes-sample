@@ -116,10 +116,21 @@ kubectl get configmap -n kube-system -o yaml
 kubeadm reset
 ```
 
-How to check which runtime kubernetes is using currently:
+**How to check which runtime kubernetes is using currently:**
 
 Kuberenetes can use below runtimes:
 
 1. Containerd
 2. CRI-O
 
+### Cluster management:
+
+**For Single node cluster:**
+```BASH
+kubectl taint nodes --all node-role.kubernetes.io/control-plane-
+```
+
+**Verify cluster is healthy or not:**
+```
+kubectl get componentstatuses
+```
