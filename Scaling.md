@@ -66,6 +66,9 @@ When load decreases, it removes unused Nodes. <br>
 This usually works in cloud environments like AWS, GCP, Azure, etc.<br>
 
 
+KEDA:
+------
+
 The Default kubernetes metrices for scaling is CPU, RAM. <br>
 if we wanted to go above this then we have to use Advance kubernetes functionality use on top of this. i.e. **KEDA**  **(Kubernetes Event driven Autoscaling)** <br>
 
