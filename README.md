@@ -109,7 +109,8 @@ kubectl get nodes
 kubectl get pods -A
 ```
 
-### Cluster management:
+Cluster management:
+------------------
 
 **For Single node cluster:**
 ```BASH
