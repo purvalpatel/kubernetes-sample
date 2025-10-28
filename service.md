@@ -35,7 +35,7 @@ Internal load balancer between pods.<br>
 ClusterIP is default service. If we did not define Type in yaml 	then it will take default service.
 
 YAML file: clusterip.yaml
-```
+```YAML
 apiVersion: v1
 kind: Service
 metadata: 
@@ -52,7 +52,7 @@ spec:
 ```
 
 Create service:
-```
+```BASH
 Kubectl apply -f clusterip.yaml
 ```
 
@@ -116,4 +116,90 @@ kubectl apply -f service.yaml
 List services from all namespaces:
 ```
 kubectl get svc --all-namespaces
+```
+<img width="554" height="233" alt="image" src="https://github.com/user-attachments/assets/93fbf9a7-e573-47bb-9212-1a02b6716b8b" />
+
+Here, 31000 is external NodePort which is accessible from internet.<br>
+
+## 3.Loadbalancer:
+- Exposes your application externally using a cloud providers external load balancer like. ELB.<br>
+It automatically assigns public IP and routes traffic to your apps backend pod.<br>
+
+- internally it uses nodeport under the hood.	
+
+Loadbalancer.yaml:
+```YAML
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-app-lb
+spec:
+  selector:
+    app: my-app
+  type: LoadBalancer
+  ports:
+    - port: 80        # External port
+      targetPort: 8080  # Pod's internal port
+```
+
+Apply:
+```
+Kubectl apply -f loadbalancer.yaml
+```
+
+Get external ip:
+```
+kubectl get svc my-app-lb
+```
+
+Get the IP of service:
+```
+kubectl get svc minio-service  --namespace minio-chennai
+```
+
+Get all the service with loadbalancer service type:
+```
+kubectl get svc --all-namespaces --field-selector spec.type=LoadBalancer
+```
+
+## 4.ExternalName:
+
+
+Maps the services to external DNS name.<br>
+
+Externalname.yaml
+```YAML
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-external-service
+spec:
+  type: ExternalName
+  externalName: example.com
+```
+
+## 5.Headless service:
+
+Service that does not assign clusterip.<br>
+Instead of load balancing it simply returns the IP address of individual pods behind it.<br>
+
+This is usedful for stateful applications, direct pod-to-pod communication.<br>
+Statefull like - databases (mysql, cassandra, etc. )<br>
+
+Headless.yaml
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-db-headless
+spec:
+  clusterIP: None
+  selector:
+    app: my-db
+  ports:
+    - port: 5432
+```
+Apply
+```
+kubectl apply -f headless.yaml
 ```
