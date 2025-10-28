@@ -181,6 +181,11 @@ So the final command for join cluster is:
 kubeadm join 10.10.20.37:6443 --token estw9q.qryflwiss25nnxxm \ --discovery-token-ca-cert-hash sha256:2ca59e3405dec39af108c05015630e27d478c454fd1b7d7c8d38573f76b4b356 
 ```
 
+List all resources:
+```
+kubectl api-resources
+```
+
 Contexts:
 ---------
 
