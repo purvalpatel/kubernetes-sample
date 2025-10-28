@@ -7,7 +7,8 @@ Basics of kubernetes cluster:
 5. Scale up your app
 6. Update your app
 
-### Kubernetes cluster components:
+Kubernetes cluster components:
+------------------------------
 
 Cluster contains two type of resources.
 1. Control plane		- cordinates the cluster ( responsible for managing cluster)
@@ -21,9 +22,11 @@ Cluster contains two type of resources.
     - Kubelet - each node as agent to managing the node.
     - Containerd - tool for managing the containers on worker node.
   
-### Installation:
+Installation:
+--------------
 
 1.Swap disable
+
 `swapoff -a`
 
 2.Install tools: (on both master and worker)
@@ -106,15 +109,6 @@ kubectl get nodes
 kubectl get pods -A
 ```
 
-
-
-**How to check which runtime kubernetes is using currently:**
-
-Kuberenetes can use below runtimes:
-
-1. Containerd
-2. CRI-O
-
 ### Cluster management:
 
 **For Single node cluster:**
@@ -135,3 +129,44 @@ kubectl get configmap -n kube-system -o yaml
 ```
 kubeadm reset
 ```
+
+**How to check which runtime kubernetes is using currently:**
+```
+kubectl get nodes -o wide
+```
+Kuberenetes can use below runtimes:
+
+1. Containerd
+2. CRI-O
+
+Contexts:
+---------
+
+Contexts are connection profiles of your kubectl.
+
+Context tells kubectl:
+- which cluster to connect.
+- which user credentials to use.
+- which namespace to use.
+
+1. Set default namespace.
+```
+kubectl config set-context my-context --namespace=mystuff
+```
+
+2. List the contexts.
+```
+kubectl config get-contexts
+```
+
+Users in kubernetes:
+
+Kubernetes does not store users inside the cluster. Like, there is no users like other service.
+
+There is two main types of users.
+1. Human users  - Admins, developers which is created on server. And they can use kubectl.
+2. Service accounts - this are the actual objects inside kubernetes.
+```
+kubectl create serviceaccount my-app
+```
+
