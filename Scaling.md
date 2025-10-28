@@ -72,4 +72,9 @@ KEDA:
 The Default kubernetes metrices for scaling is CPU, RAM. <br>
 if we wanted to go above this then we have to use Advance kubernetes functionality use on top of this. i.e. **KEDA**  **(Kubernetes Event driven Autoscaling)** <br>
 
+KEDA Work along side with the existing kubernetes component like HPA and can extend functionality without duplication or overwriding. <br>
+
+Deployment document: https://keda.sh/docs/2.18/deploy/
+
+
 
