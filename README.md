@@ -106,15 +106,7 @@ kubectl get nodes
 kubectl get pods -A
 ```
 
-Check which CIDR used at the time of kubeadm initialization:
-```
-kubectl get configmap -n kube-system -o yaml
-```
 
-<span style="color: red;">Reset cluster or worker:</span>
-```
-kubeadm reset
-```
 
 **How to check which runtime kubernetes is using currently:**
 
@@ -133,4 +125,13 @@ kubectl taint nodes --all node-role.kubernetes.io/control-plane-
 **Verify cluster is healthy or not:**
 ```
 kubectl get componentstatuses
+```
+**Check which CIDR used at the time of kubeadm initialization:**
+```
+kubectl get configmap -n kube-system -o yaml
+```
+
+**Reset cluster or worker:**
+```
+kubeadm reset
 ```
