@@ -1,0 +1,120 @@
+#### Description:
+- Pod contains containers.
+- One pod contains multiple containers in some situaltions. ( for e.g. sidecar or monitoring container with frontend application)
+
+#### Create pod:
+```
+kubectl run mypod --image=nginx:latest --port=80
+```
+#### To get detailed information of pod:
+```
+kubectl describe pod <pod-name>
+kubectl describe pod <pod-name> -n <namespace>
+```
+
+#### Retrive logs from specific pod:
+```
+kubectl logs <pod-name>
+```
+
+#### Get the list of pods:
+```
+kubectl get pods
+kubectl get pods -A
+```
+
+#### Get pods from all namespaces:
+```
+kubectl get pods --all-namespaces
+```
+
+#### Get pods from specific namespace:
+```
+kubectl get pods --namespace <namespace>
+```
+
+#### Multicontainer pod:
+
+Below is the example.
+```YAML
+apiVersion: v1
+kind: Pod
+metadata:
+  name: multi-container-pod
+spec:
+  containers:
+    - name: app-container
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+    - name: sidecar-container
+      image: busybox
+      command: ["sh", "-c", "while true; do echo Sidecar running; sleep 5; done"]
+```
+
+##### To check how many containers are running in single pod.
+```
+kubectl get pods -o wide
+
+kubectl describe pod <pod-name>
+```
+
+### Health checks :
+
+- When you start application in pod it automatically keep alive for you using process health checks.
+- This healthchecks simply ensures that the main process of your application is always running, if it isn’t it simply restarts it.
+- But in some cases process healthchecks is not enough, for example if application went to deadlock, then healtchecks still belives that application is running. But actually it is not serving requests.
+- To address this, kubernetes introduced healthchecks for application liveness.
+- This will checks the application functioning properly or not. Since this liveness health checks are application specific, you have to define them in pod manifest.
+
+### Liveness probe
+
+- Liveness defined per container, which means each container inside the pod is healthchecked seperately.
+
+# pod-health.yaml
+```YAML
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kuard
+spec:
+  containers:
+    - image: gcr.io/kuar-demo/kuard-amd64:blue
+      name: kuard
+      livenessProbe:
+        httpGet:
+          path: /healthy
+          port: 8080
+        initialDelaySeconds: 5
+        timeoutSeconds: 1
+        periodSeconds: 10
+        failureThreshold: 3
+      ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+```
+### Readiness probe:
+
+- Liveness determines if an application is running properly.container that fails liveness checks are restarted.
+- Readiness describes when a container is ready to serve user requests.
+
+### Startup probe:
+
+- Alternative way to manage slow starting containers.
+
+### Resource management:
+- we can assign resources to pod like CPU and Memory.
+- Below is the sample code.
+
+https://github.com/purvalpatel/kubernetes-sample/blob/1fb6d3149f3792373d261079a0dabfbd7a27ae86/introduction/resource-management-pod.yaml
+
+### Capping resources to pod:
+
+- We can provide minimum and maximum resource utilization. In our previous example we have used minimum resources.
+
+https://github.com/purvalpatel/kubernetes-sample/blob/f67fc4d698e7e4ca4dd8fe0322d271c8b5d752d6/introduction/min-max-resources-pod.yaml
+
+### Persist data with volumes:
+
+https://github.com/purvalpatel/kubernetes-sample/blob/8d357405736b1a88cccdef9b96b69201d719e961/introduction/data-persist-volume.yaml
