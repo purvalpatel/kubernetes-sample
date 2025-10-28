@@ -48,8 +48,18 @@ Kubectl scale deployment/nginx-deployment --replicas=1
 #### Method 4: Restart by updating image
 ```
 kubectl create deployment nginx-deployment --image=nginx --replicas=1
+```
+- Deployment will automaticaly create replicaset.
+- Deployment provides scalability and new version rollout features.
+- it is used for stateless applications for replicas.
 
+### Rollout new version with zero downtime.
+``` 
 kubectl set image deployment/nginx-deployment nginx=nginx:latest
+```
+#### check status of rollout.
+```
+kubectl rollout status deploy <deployment-name>
 ```
 
 #### Method 5 : Restart by replacing specific pod.
