@@ -7,6 +7,8 @@ Basics of kubernetes cluster:
 5. Scale up your app
 6. Update your app
 
+Project deployment links - https://github.com/purvalpatel/Sample-mlops-project
+
 Kubernetes cluster components:
 ------------------------------
 
