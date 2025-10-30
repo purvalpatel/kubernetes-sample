@@ -1,42 +1,90 @@
-Before diving to ArgoCD, you must have hands-on knowledge of kubernetes, Docker, Helm<br>
-
+### Purpose: 
 ArgoCD is a declarative, GitOps continuous delivery tool for kubernetes. <br>
 
+ArgoCD follows gitops patterns using Git repositories as a source. <br>
 
-Core concepts of ArgoCD:
----------------------
-**Application** A group of Kubernetes resources as defined by a manifest. This is a Custom Resource Definition (CRD).<br>
+Kubernetes manifests defined in several ways: <br>
+1. kustomize applications <br>
+2. Helm <br>
+3. Any custom configuration management tool <br>
 
-**Application source type** Which Tool is used to build the application.<br>
 
-**Target state** The desired state of an application, as represented by files in a Git repository.<br>
+ArgoCD Automates the deployment of the desired application state for the targetted environment. <br>
+Any changes modificated done in a source Git will be automatically deployed on kubernetes environment. <br>
 
-**Live state** The live state of that application. What pods etc are deployed.<br>
+Features: <br>
+1. Automated deployment of applications to specified target environments. <br>
+2. Support multiple config management tools. (kustomize, helm) <br>
+3. Ability to manage multiple clusters. <br>
+4. SSO integration. <br>
+5. Health status analysis of application resources. <br>
+6. Automated configuration drift detection and visualization. <br>
+7. WebUI which provides real-time view of application activity. <br>
+8. webhook integration. <br>
 
-**Sync status** Whether or not the live state matches the target state. Is the deployed application the same as Git says it should be?<br>
+ 
 
-**Sync** The process of making an application move to its target state. E.g. by applying changes to a Kubernetes cluster.<br>
-
-**Sync operation status** Whether or not a sync succeeded.<br>
-
-**Refresh** Compare the latest code in Git with the live state. Figure out what is different.<br>
-
-**Health** The health of the application, is it running correctly? Can it serve requests?<br>
-
-**Tool** A tool to create manifests from a directory of files. E.g. Kustomize. See Application Source Type.<br>
-
-**Configuration management tool** See Tool.<br>
-
-**Configuration management plugin** A custom tool.<br>
-
-## installation:
-1. Installation.
+Installation steps: 
+-------------------
+Create namespace:
 ```
-kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl create namespace argocd 
 ```
+Create Resources:
+```
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml 
+```
+Expose port with services: 
+```
+kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}' 
+```
+ 
+List created resources: 
+```
+kubectl get all –n argocd 
+```
+ 
+### Login ArgoCD in brwoser: 
 
-2. Expose port with service type load balancer.
+Use port of argocd-server service. <br>
+
+http://<ip>:<port> 
+
+ 
+
+#### How to get the default password of argocd login. 
+
+Default username is : admin <br>
+
+**Follow below steps to get password:**
+
+1. Connect Argocd-server pod: 
 ```
-kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+kubectl -n argocd1 exec -it argocd-server-78484d9d9d-q7ghl – bash 
 ```
+2. Run below command to get the password of admin user from argocd CLI: 
+```
+argocd admin initial-password 
+```
+3. Use this password to login in to browser. 
+
+ Deployment Architecture:
+ --------
+ 1. If Project have 5 Manifests files.
+k8s/
+ ├── namespace.yaml
+ ├── configmap.yaml
+ ├── service.yaml
+ └── deployment.yaml
+
+Argo will apply in rough order:
+```
+kubectl apply -f k8s/
+```
+it knows the dependencies order. like namesapces before deployments.<br>
+It knows CRDs dependencies (CRDs firsts, CRs later) <br>
+
+2. With Helm or kustomize
+
+ If your repo uses Kutomize or helm, then Argo doesnt apply manifests manually. it will apply in the same order which you have provided in helm/kustomize.
+
