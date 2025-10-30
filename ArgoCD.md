@@ -226,3 +226,4 @@ Verify application status:
 ```
 kubectl get applications -n argocd
 ```
+Also you can check ArgoCD web UI and it is showing there as well.
