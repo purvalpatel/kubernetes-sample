@@ -124,7 +124,7 @@ service:
 helm template nginx
 ```
 
-###### 4. Push code to git repository.
+##### 4. Push code to git repository.
 Now your repo will looks like this <br>
 
 https://github.com/your-org/myapp-helm <br>
@@ -133,7 +133,7 @@ https://github.com/your-org/myapp-helm <br>
     ├── values.yaml <br>
     └── templates/ <br>
 
-###### 5.Now Create deployment in ArgoCD.
+##### 5.Now Create deployment in ArgoCD.
 - Login ArgoCD. <br>
 - Connect repository with ArgoCD with credentials.
      Settings -> Repositories.<br>
@@ -153,7 +153,7 @@ https://github.com/your-org/myapp-helm <br>
   Cluster URL - Select Cluster URL ( mostly same as where argocd deployed )
   Namespace - Namespace where it should be deployed.
 
-###### 6. Create.
+##### 6. Create.
 - Now it will start deploying application.
 
 
