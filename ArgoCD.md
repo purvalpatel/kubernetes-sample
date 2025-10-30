@@ -119,12 +119,21 @@ service:
   type: ClusterIP
   port: 80
 ```
-###### 3. Test the chart locally.
+##### 3. Test the chart locally.
 ```
 helm template nginx
 ```
 
 ##### 4. Push code to git repository.
+```BASH
+git add .
+git commit -m "pushing code"
+git branch -m master main
+git fetch origin
+git branch --set-upstream-to=origin/main main
+git pull --rebase
+git push origin main
+```
 Now your repo will looks like this <br>
 
 https://github.com/your-org/myapp-helm <br>
