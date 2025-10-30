@@ -177,9 +177,52 @@ Sample of nginx deployment using ArgoCD:
 Automated (GitOps)
 ------------------
 
+- GitOps way.
+- The real power of argoCD where everything is declarative inside Git, including ArgoCD Applicaiton definations.
 
+### Steps:
+1. Create Simple helm chart.
+2. Push it into Git.
+3. Create ArgoCD application YAML that Automatically deploy a chart.
 
+First two steps are completed, so we are ignoring as of now. <br>
 
+Step 3 : Create ArgoCD application YAML. <br> 
+You can keep it in another Git repo or apply it directly. <br>
+nginx-argocd.yaml <br>
 
+```YAML
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: myapp
+  namespace: argocd          # Argo CD’s namespace
+spec:
+  project: default
+  source:
+    repoURL: 'https://git.example.com/devops/myapp-helm.git'  # Your repo
+    targetRevision: main                                      # Branch name
+    path: '.'                                                 # Path of chart inside repo
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: myapp
+  syncPolicy:
+    automated:                      # Enables full GitOps automation
+      prune: true                   # Delete resources removed from Git
+      selfHeal: true                # Auto-fix drift
+    syncOptions:
+      - CreateNamespace=true        # Auto-create namespace if missing
 
+```
+Apply:
+```
+kubectl apply -f myapp-argo.yaml
+```
 
+Verify application status:
+```
+kubectl get applications -n argocd
+```
