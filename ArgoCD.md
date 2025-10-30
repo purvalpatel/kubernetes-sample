@@ -136,22 +136,22 @@ https://github.com/your-org/myapp-helm <br>
 ##### 5.Now Create deployment in ArgoCD.
 - Login ArgoCD. <br>
 - Connect repository with ArgoCD with credentials.
-     Settings -> Repositories.<br>
-     Connect Repo -> Select "VIA HTTP/HTTPS" <br>
+     **Settings** -> **Repositories**.<br>
+     **Connect Repo** -> Select "**VIA HTTP/HTTPS**" <br>
      Enter below details: <br>
-     Name, Project, Repository URL, Username and password. <br>
-     Or you can provide Gitlab token instead of username and password.<br>
+     **Name**, **Project**, **Repository URL**, **Username** and **password**. <br>
+     Or you can provide **Gitlab token** instead of username and password.<br>
      Now it is showing **Connected**. <br>
 
 - Naviagate to **applications** ->**New App**. <br>
-  Application Name
-  Project name - (select project)
-  Sync policy (manual/Automatic)
-  Source - Git project Repository URL.
-  Revision - Select branch name
-  Path - Provide path where YAML files are located.
-  Cluster URL - Select Cluster URL ( mostly same as where argocd deployed )
-  Namespace - Namespace where it should be deployed.
+  **Application Name** <br>
+  **Project Name** - (select project) <br>
+  **Sync policy** (manual/Automatic) <br>
+  **Source** - Git project Repository URL. <br>
+  **Revision** - Select branch name <br>
+  **Path** - Provide path where YAML files are located. <br>
+  **Cluster URL** - Select Cluster URL ( mostly same as where argocd deployed ) <br>
+  **Namespace** - Namespace where it should be deployed. <br>
 
 ##### 6. Create.
 - Now it will start deploying application.
