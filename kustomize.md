@@ -50,3 +50,7 @@ images:
     newTag: 1.27.1
 
 ```
+apply:
+```
+kubectl apply -k .
+```
