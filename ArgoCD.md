@@ -70,14 +70,15 @@ argocd admin initial-password
 
  Deployment Architecture:
  --------
- 1. If Project have 5 Manifests files.
-k8s/
- ├── namespace.yaml
- ├── configmap.yaml
- ├── service.yaml
- └── deployment.yaml
+ 1. If Project have 5 Manifests files.<br>
+k8s/<br>
+ ├── namespace.yaml<br>
+ ├── configmap.yaml<br>
+ ├── service.yaml<br>
+ └── deployment.yaml<br>
 
-Argo will apply in rough order:
+Argo will apply in rough order:<br>
+
 ```
 kubectl apply -f k8s/
 ```
