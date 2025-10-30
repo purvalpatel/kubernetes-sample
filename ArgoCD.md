@@ -70,7 +70,7 @@ argocd admin initial-password
 
  Deployment Architecture:
  --------
- 1. If Project have 5 Manifests files.<br>
+ ### 1. If Project have 5 Manifests files.<br>
 k8s/<br>
  ├── namespace.yaml<br>
  ├── configmap.yaml<br>
@@ -85,7 +85,7 @@ kubectl apply -f k8s/
 it knows the dependencies order. like namesapces before deployments.<br>
 It knows CRDs dependencies (CRDs firsts, CRs later) <br>
 
-2. With Helm or kustomize
+### 2. With Helm or kustomize
 
  If your repo uses Kutomize or helm, then Argo doesnt apply manifests manually. it will apply in the same order which you have provided in helm/kustomize.
 
