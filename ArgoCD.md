@@ -44,7 +44,7 @@ List created resources:
 kubectl get all –n argocd 
 ```
  
-### Login ArgoCD in brwoser: 
+### Login ArgoCD in browser: 
 
 Use port of argocd-server service. <br>
 
@@ -88,4 +88,81 @@ It knows CRDs dependencies (CRDs firsts, CRs later) <br>
 ### 2. With Helm or kustomize
 
  If your repo uses Kutomize or helm, then Argo doesnt apply manifests manually. it will apply in the same order which you have provided in helm/kustomize.
+
+Sample of nginx deployment with helm using ArgoCD:
+-------------------------------------------------
+
+##### 1. Generate helm chart for nginx.
+```
+helm create nginx
+```
+
+##### 2. Make changes in the configrations.
+Edit chart.yaml <br>
+```YAML
+apiVersion: v2
+name: myapp
+version: 0.1.0
+description: A simple Helm chart for my app
+```
+
+Edit values.yaml <br>
+```YAML
+replicaCount: 1
+
+image:
+  repository: nginx
+  tag: "1.27"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+```
+###### 3. Test the chart locally.
+```
+helm template nginx
+```
+
+###### 4. Push code to git repository.
+Now your repo will looks like this <br>
+
+https://github.com/your-org/myapp-helm <br>
+└── nginx/ <br>
+    ├── Chart.yaml <br>
+    ├── values.yaml <br>
+    └── templates/ <br>
+
+###### 5.Now Create deployment in ArgoCD.
+- Login ArgoCD. <br>
+- Connect repository with ArgoCD with credentials.
+     Settings -> Repositories.<br>
+     Connect Repo -> Select "VIA HTTP/HTTPS" <br>
+     Enter below details: <br>
+     Name, Project, Repository URL, Username and password. <br>
+     Or you can provide Gitlab token instead of username and password.<br>
+     Now it is showing **Connected**. <br>
+
+- Naviagate to **applications** ->**New App**. <br>
+  Application Name
+  Project name - (select project)
+  Sync policy (manual/Automatic)
+  Source - Git project Repository URL.
+  Revision - Select branch name
+  Path - Provide path where YAML files are located.
+  Cluster URL - Select Cluster URL ( mostly same as where argocd deployed )
+  Namespace - Namespace where it should be deployed.
+
+###### 6. Create.
+- Now it will start deploying application.
+
+
+
+
+
+
+### This process can be done by two ways:
+#### 1. Manual way ( ArgoCD WebUI )
+   
+#### 2. Automated (Gitops)
 
