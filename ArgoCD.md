@@ -170,6 +170,10 @@ https://github.com/your-org/myapp-helm <br>
 ##### 6. Create.
 - Now it will start deploying application.
 
+
+Note: <br>
+You can delete the deployment directly from web ui. and pods will deleted. 
+
 Sample of nginx deployment using ArgoCD:
 -----------------------------------------
 1. Process will be same just keep the deployment, namespaces, services YAML manifests files seperately.
@@ -227,3 +231,7 @@ Verify application status:
 kubectl get applications -n argocd
 ```
 Also you can check ArgoCD web UI and it is showing there as well.
+
+Note:<br>
+- If you delete manifest with `kubectl delete -f argocd-nginx.yml` then only application from web ui is deleted. but pods are running.
+- You need to delete pods/deployment  manually.
