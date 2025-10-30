@@ -89,6 +89,11 @@ It knows CRDs dependencies (CRDs firsts, CRs later) <br>
 
  If your repo uses Kutomize or helm, then Argo doesnt apply manifests manually. it will apply in the same order which you have provided in helm/kustomize.
 
+### This process can be done by two ways:
+#### 1. Manual way ( ArgoCD WebUI )
+   
+#### 2. Automated (Gitops)
+
 Sample of nginx deployment with helm using ArgoCD:
 -------------------------------------------------
 
@@ -165,13 +170,16 @@ https://github.com/your-org/myapp-helm <br>
 ##### 6. Create.
 - Now it will start deploying application.
 
+Sample of nginx deployment using ArgoCD:
+-----------------------------------------
+1. Process will be same just keep the deployment, namespaces, services YAML manifests files seperately.
+
+Automated (GitOps)
+------------------
 
 
 
 
 
-### This process can be done by two ways:
-#### 1. Manual way ( ArgoCD WebUI )
-   
-#### 2. Automated (Gitops)
+
 
