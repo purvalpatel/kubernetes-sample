@@ -95,6 +95,9 @@ Now label namespace to enable sidecar injection.
 kubectl label namespace default istio-injection=enabled
 
 kubectl label namespace monitoring istio-injection=enabled
+
+# Remove label
+kubectl label namespace monitoring istio-injection-
 ```
 
 Now restart the deployment:
