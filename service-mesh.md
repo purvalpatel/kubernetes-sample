@@ -71,3 +71,97 @@ Istio sidecar proxies (Envoy) generate rich metrics for: <br>
 - Prometheus scrapes all this data
 
 
+#### Install istio:
+```
+curl -L https://istio.io/downloadIstio | sh -
+```
+
+This will install istioctl libraries. <br>
+Now deploy istio service pods.
+```
+cd istio-1.28.0/bin
+./istioctl install --set profile=demo -y ## for demo profile
+./istioctl install --set profile=minimal -y       ## for minimal profile.
+
+```
+
+Check status of resources which is deployed in istio.
+```
+kubectl get all -n istio-system
+```
+
+Now label namespace to enable sidecar injection.
+```
+kubectl label namespace default istio-injection=enabled
+
+kubectl label namespace monitoring istio-injection=enabled
+```
+
+Now restart the deployment:
+```
+kubectl rollout restart deployment prometheus-grafana -n monitoring
+```
+Now check the pod contains the istio side-car contaier or not:
+
+```
+kubectl describe pod prometheus-grafana-56c758559f-sglk2 -n monitoring
+```
+
+<img width="1125" height="587" alt="image" src="https://github.com/user-attachments/assets/824b17a2-376a-476f-beff-744ad36ab0de" />
+
+This means Istio is now connected to your app. <br>
+
+Expose app with Istio  Gateway + Virtualservice:
+
+Istio does NOT use Kubernetes Ingress. <br>
+It uses Gateway and virtual service. <br>
+
+Gateway (80/443) -> Virtual service (Gateway, Internal port ) <br>
+
+Means correct pattern is, <br>
+1. One Gateway (80/443)
+2. Multiple virtualservice ( different applications internal port and domains )
+
+gateway.yaml
+```
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: myapp-gateway
+spec:
+  selector:
+    istio: ingressgateway   # use the default istio ingress gateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "example.com"      # your domain
+```
+
+virtualservice.yaml
+```
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: myapp
+spec:
+  hosts:
+    - "example.com"
+  gateways:
+    - myapp-gateway
+  http:
+    - route:
+        - destination:
+            host: myapp
+            port:
+              number: 8080
+```
+
+Now your app is integrated with istio:
+```
+http://<node-ip>:<istio-nodeport>
+```
+
+
