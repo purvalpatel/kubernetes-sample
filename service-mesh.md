@@ -32,16 +32,24 @@ It runs on the top of that. <br>
 **It works as a sidecar proxies.** <br>
 example: Istio, Linkerd (older versions), Consul, Kuma. <br> <br>
 
+Istio:
+-----
+its a traffic manager and security manager for your microservice. <br>
+
+- Traffic control
+- Security
+- Observability
+
 Istio + Prometheus integration:
 ------------------------------
 
 Prometheus only can collect Node Metrics, Pod metrics. <br>
+Istio can generate detailed telemetry which monitoring tools can use. <br>
 
 ## Why Istio needs Prometheus? <br>
 
 Istio sidecar proxies (Envoy) generate rich metrics for: <br>
-
-### ✔ Traffic
+### ✔ Traffic (Canary,Blue/Green,A/B testing,Fault injection,Circuit breaking)
 - request count
 - request duration
 - success/error rate
@@ -61,4 +69,5 @@ Istio sidecar proxies (Envoy) generate rich metrics for: <br>
 - pilot synchronization
 - cluster-wide mesh health
 - Prometheus scrapes all this data
+
 
