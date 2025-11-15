@@ -219,3 +219,17 @@ There is two main types of users.
 kubectl create serviceaccount my-app
 ```
 
+
+Kubernetes Object Categories:
+----------------------------
+| **Category**                   | **Objects**                                                     |
+| ------------------------------ | --------------------------------------------------------------- |
+| **Core**                       | Pods, Services, ConfigMap, Secret, PVC, PV, Node, Namespace     |
+| **Workloads**                  | Deployment, ReplicaSet, StatefulSet, DaemonSet, Job, CronJob    |
+| **Network**                    | Ingress, NetworkPolicy, EndpointSlice                           |
+| **Storage**                    | StorageClass, VolumeAttachment, CSIDriver                       |
+| **RBAC**                       | Role, ClusterRole, RoleBinding, ClusterRoleBinding              |
+| **Autoscaling**                | HPA, VPA                                                        |
+| **API Extensions**             | CRD, APIService, Webhooks                                       |
+| **Full Routing (Gateway API)** | GatewayClass, Gateway, HTTPRoute, TCPRoute, UDPRoute, GRPCRoute |
+
