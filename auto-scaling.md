@@ -256,6 +256,8 @@ kubectl apply -f hpa-request-count.yaml
 Verify hpa:
 ```
 kubectl get hpa
+# If not showing then delete prometheus-adapter:
+kubectl -n monitoring delete pod -l app.kubernetes.io/name=prometheus-adapter
 ```
 
 ## 6. Test:
