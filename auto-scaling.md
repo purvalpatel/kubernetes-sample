@@ -180,6 +180,9 @@ Verify the metrics are exposing in metrics or not:
 curl http://<clusterip>:8000/metrics/
 # / is mandadory at the end.
 ```
+output:
+<img width="663" height="223" alt="image" src="https://github.com/user-attachments/assets/6b6864eb-a400-4d34-b667-30ba0e8e10cb" />
+
 
 ## 4. Create prometheus adapter to get metrics from prometheus, and expose it into custom metrics.
 Install prometheus-adapter if not available:
