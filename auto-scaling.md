@@ -180,7 +180,7 @@ Verify the metrics are exposing in metrics or not:
 curl http://<clusterip>:8000/metrics/
 # / is mandadory at the end.
 ```
-output:
+output:<br>
 <img width="663" height="223" alt="image" src="https://github.com/user-attachments/assets/6b6864eb-a400-4d34-b667-30ba0e8e10cb" />
 
 
