@@ -7,7 +7,7 @@ Auto-scaling with prometheus
 4. HPA reads metrics --> HPA reads metrics from Prometheus adapter.
 5. Scale pods
 
-So the flow will be: <br>
+**So the flow will be**: <br>
 ```
 [Your app] -> [Prometheus] -> [Prometheus Adapter] -> [Kubernetes HPA] -> [Scaling] 
 ```
@@ -283,7 +283,7 @@ curl http://localhost:9091/api/v1/label/__name__/values
 ```
 kubectl get --raw /apis/custom.metrics.k8s.io/v1beta1 
 ```
-If it is showing [] empty then,
+If it is showing `[]` empty like below then,
 ```
 {"kind":"APIResourceList","apiVersion":"v1","groupVersion":"custom.metrics.k8s.io/v1beta1","resources":[]}
 ```
@@ -293,7 +293,6 @@ restart prometheus-adapter:
 kubectl -n monitoring delete pod -l app.kubernetes.io/name=prometheus-adapter
 # OR
 kubectl -n monitoring delete pod -l app=prometheus-adapter
-
 ```
 
 Check which prometheus data is getting fetched by prometheus-adapter:
@@ -304,7 +303,6 @@ it should be from `monitoring` namespace.
 `http://prometheus-kube-prometheus-prometheus.monitoring.svc:9090` that we have mentioned in `prometheus-adapter-values.yaml`.
 
 Now prometheus adapter is getting the data from custom metrics :
-
 ```
 kubectl get --raw /apis/custom.metrics.k8s.io/v1beta1 | jq
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/pods/*/requests"
@@ -314,3 +312,7 @@ Now check hpa,
 ```
 kubectl get hpa
 ```
+
+**Note:**  <br>
+Metric name from hpa.yaml `metrics.type.metric.name` should be match the **configmap of prometheus-adapter**. <br>
+You can verify: `kubectl -n monitoring get configmap prometheus-adapter -o yaml` <br>
