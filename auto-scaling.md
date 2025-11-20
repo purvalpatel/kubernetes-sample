@@ -218,6 +218,11 @@ upgrade helm for prometheus-adapter:
 helm upgrade --install prometheus-adapter prometheus-community/prometheus-adapter   -f prometheus-adapter-values.yaml -n monitoring
 ```
 
+Verify metrics are showing in custom metrics or not:
+```
+kubectl get --raw /apis/custom.metrics.k8s.io/v1beta1
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/pods/*/requests"
+```
 ## 5. Create Horizontal pod autoscaler:
 hpa-request-total.yaml
 ```
