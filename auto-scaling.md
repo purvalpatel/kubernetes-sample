@@ -182,6 +182,12 @@ curl http://<clusterip>:8000/metrics/
 ```
 
 ## 4. Create prometheus adapter to get metrics from prometheus, and expose it into custom metrics.
+Install prometheus-adapter:
+```
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+```
+
 prometheus-adapter-values.yaml
 ```
 prometheus:
