@@ -12,6 +12,8 @@ Auto-scaling with prometheus
 [Your app] -> [Prometheus] -> [Prometheus Adapter] -> [Kubernetes HPA] -> [Scaling] 
 ```
 
+In below example we are autoscaling according to **request_total** metrics.
+
 ## 1. Building application FastAPI.
 app.py
 ```
@@ -268,8 +270,10 @@ This is your **HPA** Settings.
 
 ### Troubleshooting:
 
-1. Check metrices are showing in **prometheus** or not:
+1. Check metrices are showing in **prometheus** or not: <br>
+
 To check the metrics are showing in prometheues you first need to **forward a port** of prometheus so you can check. <br>
+This is only for testing purpose. <br>
 ```
 kubectl port-forward -n monitoring svc/prometheus-kube-prometheus-prometheus 9091:9090
 ```
@@ -299,7 +303,7 @@ Check which prometheus data is getting fetched by prometheus-adapter:
 ```
 kubectl -n monitoring get deploy prometheus-adapter -o yaml | grep -i prometheus -A3 -B3
 ```
-it should be from `monitoring` namespace.
+it should be from `monitoring` namespace. <br>
 `http://prometheus-kube-prometheus-prometheus.monitoring.svc:9090` that we have mentioned in `prometheus-adapter-values.yaml`.
 
 Now prometheus adapter is getting the data from custom metrics :
@@ -314,5 +318,18 @@ kubectl get hpa
 ```
 
 **Note:**  <br>
-Metric name from hpa.yaml `metrics.type.metric.name` should be match the **configmap of prometheus-adapter**. <br>
-You can verify: `kubectl -n monitoring get configmap prometheus-adapter -o yaml` <br>
+- Metric name from hpa.yaml `metrics.type.metric.name` should be match the **configmap of prometheus-adapter**. <br>
+- You can verify: `kubectl -n monitoring get configmap prometheus-adapter -o yaml` <br>
+- If you want to add another metrics e.g. `active_sessions` then you have to add that metrics into fastAPI. <br>
+
+### Other commands:
+Remove prometheus-adapter:
+```
+helm list -n monitoring
+helm uninstall prometheus-adapter -n monitoring
+```
+If want to expose service port then,
+```
+kubectl port-forward svc/fastapi-sentiment-service 8086:8003
+```
+![IMG_1234](https://github.com/user-attachments/assets/2dd72eb0-f5fc-4ad0-8d5c-f826b186c290)
