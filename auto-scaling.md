@@ -225,7 +225,7 @@ spec:
         name: requests
       target:
         type: AverageValue
-        averageValue: "0.100"  ## 1 requests/second per pod.
+        averageValue: "10"  ## 10 requests/second per pod.
 
 ```
 Apply:
