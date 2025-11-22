@@ -183,7 +183,6 @@ Just add one more block.<br>
 
 ### Now we will do Load Test:
 
-Install some tool like, HTTP tool generator, **hey**<br>
 ```
-hey -z 1m -c 10 http://<EXTERNAL-IP>
+while true; do   curl -s http://10.98.63.182:8000/predict -X POST -H "Content-Type: application/json"      -d '{"text":"hello"}' > /dev/null; done
 ```
