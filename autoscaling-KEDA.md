@@ -56,6 +56,9 @@ in this case we are using **scaledobject**, which is a wrapper on top of that.<b
 ### Deployment Architecture:
 ```
 Deployment -> ScaledObject ( Automatically install HPA )  -> Pods auto scaling
+
+Means,
+App emits metrics → Prometheus collects → KEDA reads → HPA decides → Kubernetes scales.
 ```
 ## Deployment steps:
 deployment.yaml
