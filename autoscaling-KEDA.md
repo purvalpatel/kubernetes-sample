@@ -134,13 +134,18 @@ Prometheus ↔️ Application (requires ServiceMonitor if you want Prometheus to
 KEDA ↔️ Prometheus (no ServiceMonitor needed) <br>
 
 Prometheus will scrape data from service in two ways: <br>
-1. Annotations
+
+1. Annotations <br>
    - If service have below annotation `kubectl describe service <service-name>`  <br>
 
   ```
    prometheus.io/scrape: "true"
   ```
-  Then prometheus will scrape the service. No need of servicemonitor.
+  Then prometheus will scrape the service. No need of servicemonitor. <br>
+
+  Thats why in deployment this is mentioned. <br>
+  <img width="372" height="94" alt="image" src="https://github.com/user-attachments/assets/28f4ecc8-3836-4bcd-9d47-c7c9e170fbe1" />
+
   
 2. ServiceMonitor
    If you dont use annotations., you must use ServiceMonitor.
