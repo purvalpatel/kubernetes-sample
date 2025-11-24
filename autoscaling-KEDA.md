@@ -53,7 +53,11 @@ For that KEDA gives us configuration called **scaledObject**.<br>
 If you are directly dealing with kubernetes then you would use **hpa**.<br>
 in this case we are using **scaledobject**, which is a wrapper on top of that.<br>
 
-## Deployment:
+### Deployment Architecture:
+```
+Deployment -> ScaledObject ( Automatically install HPA )  -> Pods auto scaling
+```
+## Deployment steps:
 deployment.yaml
 ```
 apiVersion: apps/v1
