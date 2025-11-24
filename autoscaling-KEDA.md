@@ -205,4 +205,13 @@ Remove it by patching finalizer: <br>
 kubectl patch scaledobject fastapi-sentiment-keda -p '{"metadata":{"finalizers":null}}' --type=merge
 ```
 
+List CRD: <br>
+```
+kubectl get crds | grep -i scale
+```
+Remove scaled object:
+```
+kubectl patch crd scaledobjects.keda.sh --type=merge -p '{"metadata":{"finalizers":[]}}'
+```
+
 
