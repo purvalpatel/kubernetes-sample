@@ -238,3 +238,8 @@ kubectl port-forward -n monitoring svc/prometheus-kube-prometheus-prometheus 909
 
 ```
 
+2. If You are using **kube-prometheus-stack** then annotations will not work. (unless you explicitly enable annotation-based scraping) < br>
+  **Kube-prometheus-stack** : means prometheus + Grafana installed with Helm. <br>
+
+  By default, **kube-prometheus-stack** requires a **ServiceMonitor** or **PodMonitor**. <br>
+  
