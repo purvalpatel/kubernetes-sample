@@ -228,4 +228,13 @@ Remove scaled object:
 kubectl patch crd scaledobjects.keda.sh --type=merge -p '{"metadata":{"finalizers":[]}}'
 ```
 
+Forward Port from local:
+```
+ssh -L 9095:localhost:9090 merai@10.x.x.x -pxxxx
+
+kubectl port-forward -n monitoring svc/prometheus-kube-prometheus-prometheus 9095:9090
+
+## Now open below link in local : http://localhost:9095
+
+```
 
