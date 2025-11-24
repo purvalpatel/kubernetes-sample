@@ -186,3 +186,23 @@ Just add one more block.<br>
 ```
 while true; do   curl -s http://10.98.63.182:8000/predict -X POST -H "Content-Type: application/json"      -d '{"text":"hello"}' > /dev/null; done
 ```
+
+
+## Troubleshooting:
+
+1. If trying to delete sclaedobject and it is taking time to delete then,
+List all the CRD's <br>
+```
+kubectl get crds | grep -i scale
+```
+Scaledobject may not delted due to finalizers, check finalizer.
+```
+kubectl get scaledobject fastapi-sentiment-keda -o yaml
+```
+
+Remove it by patching finalizer: <br>
+```
+kubectl patch scaledobject fastapi-sentiment-keda -p '{"metadata":{"finalizers":null}}' --type=merge
+```
+
+
