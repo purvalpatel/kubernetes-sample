@@ -59,6 +59,8 @@ Deployment -> ScaledObject ( Automatically install HPA )  -> Pods auto scaling
 
 Means,
 App emits metrics → Prometheus collects → KEDA reads → HPA decides → Kubernetes scales.
+
+ServiceMonitor Requires if kube-prometheus-stack installed with helm.
 ```
 ## Deployment steps:
 deployment.yaml
