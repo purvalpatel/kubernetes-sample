@@ -25,7 +25,17 @@ KEDA Work along side with the existing kubernetes component like HPA and can ext
 **Deployment document**: https://keda.sh/docs/2.18/deploy/
 
 **Install KEDA with Helm.<br>**
+```
+helm repo add kedacore https://kedacore.github.io/charts  
+helm repo update
+helm install keda kedacore/keda --namespace keda --create-namespace
+```
 
+Verify:
+```
+kubectl get pods -n keda
+
+```
 Now, we will understand **how we use it**. <br>
 
 We, have grafana and prometheus setup. in Grafana there is metrics called, Latency is showing.<br>
