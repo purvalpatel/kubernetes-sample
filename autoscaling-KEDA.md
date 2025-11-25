@@ -158,7 +158,33 @@ Prometheus will scrape data from service in two ways: <br>
   
 2. ServiceMonitor
    If you dont use annotations., you must use ServiceMonitor.
-   
+   if you have setup prometheus-stack with helm then you have to use servicemonitor.
+
+```
+   apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: fastapi-sentiment-monitor
+  namespace: monitoring
+  labels:
+    release: prometheus
+spec:
+  namespaceSelector:
+    matchNames:
+    - default
+  selector:
+    matchLabels:
+      app: fastapi-sentiment
+  endpoints:
+    - port: http        # MUST match the service port name
+      path: /metrics
+      interval: 15s
+
+```
+Create:
+```
+kubectl apply -f servicemonitor.yaml
+```
 
 ### ScaledObject:
 Below is the example of http requests.
@@ -197,8 +223,19 @@ Verify KEDA pods are running properly or not: `kubectget pods -n keda` <br>
 You can add **multiple triggers in scaledobject.**<br>
 Just add one more block.<br>
 
+
+## Verify prometheus scraping metrics or not:
+```
+# forward port for temporary testing:
+kubectl port-forward -n monitoring svc/prometheus-kube-prometheus-prometheus 9095:9090
+
+curl http://localhost:9095/api/v1/targets | jq
+curl -s http://localhost:9095/api/v1/query?query=requests_total | jq
+```
+
 ### Now we will do Load Test:
 
+Reduce the value for testing: <br>
 ```
 while true; do   curl -s http://10.98.63.182:8000/predict -X POST -H "Content-Type: application/json"      -d '{"text":"hello"}' > /dev/null; done
 ```
