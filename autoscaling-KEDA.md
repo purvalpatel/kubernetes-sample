@@ -330,7 +330,7 @@ spec:
   scaleTargetRef:
     name: fastapi-sentiment   # your deployment name
 
-  minReplicaCount: 1
+  minReplicaCount: 0    ## here is for scale to zero
   maxReplicaCount: 10
 
   cooldownPeriod: 30
@@ -346,3 +346,22 @@ spec:
         threshold: "0.02"
         activationThreshold: "0.1"
 ```
+But Scale to zero only works well with the Queue. ( kafka, Rabbitmq ) To doing the same for the web applications you need to configure **HTTP-Addon for KEDA**. <br>
+
+KEDA HTTP Addon works well with Regular web apps: <br>
+✔ Handles real **HTTP traffic** <br>
+✔ Works even when **pods = 0** <br>
+✔ Buffers requests during cold-start <br>
+✔ Scales based on actual demand, not metrics <br>
+✔ Safer and faster than Prometheus scaling <br>
+✔ Designed specifically for web APIs (FastAPI, Flask, Node.js, Django, Go, etc.) <br>
+
+### ✅ 3 Ways KEDA Can Scale to Zero: <br>
+
+| Method                                                      | Scale to Zero?       | Best For                      | Works for Normal Web Apps?          |
+| ----------------------------------------------------------- | -------------------- | ----------------------------- | ----------------------------------- |
+| **Queue-based Scalers** (RabbitMQ, Kafka, Redis, SQS, etc.) | ✅ YES                | Background jobs               | ❌ Not for HTTP APIs                 |
+| **Prometheus Scaler**                                       | ⚠️ NO (not for HTTP) | Microservices with metrics    | ❌ Cannot scale from 0 for HTTP apps |
+| **KEDA HTTP Addon**                                         | ⭐ YES                | Normal web APIs/HTTP services | ✅ YES                               |
+
+
