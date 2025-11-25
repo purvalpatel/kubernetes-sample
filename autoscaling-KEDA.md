@@ -365,3 +365,46 @@ KEDA HTTP Addon works well with Regular web apps: <br>
 | **KEDA HTTP Addon**                                         | ⭐ YES                | Normal web APIs/HTTP services | ✅ YES                               |
 
 
+### Setup KEDA HTTP Addon: <br>
+```
+helm repo add kedacore https://kedacore.github.io/charts
+helm repo update
+helm upgrade --install keda kedacore/keda -n keda --create-namespace
+
+
+helm upgrade --install keda-add-ons-http \
+  kedacore/keda-add-ons-http \
+  -n keda
+```
+Verify:
+```
+kubectl get all -n keda
+```
+
+Create **http-scaledObject.yaml**
+```
+apiVersion: http.keda.sh/v1alpha1
+kind: HTTPScaledObject
+metadata:
+  name: fastapi-http-scaler
+  namespace: default
+spec:
+  hosts:
+    - "*"
+  pathPrefixes:
+    - "/"
+  scaleTargetRef:
+    service: fastapi-sentiment-service
+    port: 8000
+  replicas:
+    min: 0
+    max: 10
+  scalingMetric:
+    concurrency:
+      targetValue: 100
+```
+Apply:
+```
+kubectl apply -f http-scaledobject.yaml
+```
+
