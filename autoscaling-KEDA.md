@@ -320,7 +320,7 @@ minReplicaCount: 0
 ```
 
 So, ScaledObject it will be like: <br>
-```
+```YAML
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
@@ -366,7 +366,7 @@ KEDA HTTP Addon works well with Regular web apps: <br>
 
 
 ### Setup KEDA HTTP Addon: <br>
-```
+```BASH
 helm repo add kedacore https://kedacore.github.io/charts
 helm repo update
 helm upgrade --install keda kedacore/keda -n keda --create-namespace
@@ -377,12 +377,12 @@ helm upgrade --install keda-add-ons-http \
   -n keda
 ```
 Verify:
-```
+```BASH
 kubectl get all -n keda
 ```
 
 Create **http-scaledObject.yaml**
-```
+```YAML
 apiVersion: http.keda.sh/v1alpha1
 kind: HTTPScaledObject
 metadata:
@@ -403,8 +403,19 @@ spec:
     concurrency:
       targetValue: 100
 ```
-Apply:
+**Apply:**
+- Remove the old ScaledObject. <br>
+- HTTP-Add on **does not create starndard HPA**. <br>
+      - Uses its own controller + interceptor + queue proxy to scale your deployment. <br>
+      - Applies scaling internally via the KEDA operator. <br>
+      - so,  `kubectl get hpa` **won’t show anything.**
+  
 ```
 kubectl apply -f http-scaledobject.yaml
+```
+
+Verify scaling:
+```
+kubectl get deploy fastapi-sentiment -w
 ```
 
