@@ -253,6 +253,7 @@ Reduce the value for testing: <br>
 ```
 while true; do   curl -s http://10.98.63.182:8000/predict -X POST -H "Content-Type: application/json"      -d '{"text":"hello"}' > /dev/null; done
 ```
+<img width="1145" height="177" alt="image" src="https://github.com/user-attachments/assets/03b7ac49-d30c-47ec-94bb-450282ab0dea" />
 
 
 ## Troubleshooting:
@@ -303,22 +304,22 @@ Using your PromQL: <br>
 ```
 sum(rate(requests_total[1m]))
 ```
-KEDA receives a number = QPS.
-Example:
-0.00 → no traffic
-0.1 → very low traffic
-5.0 → heavy traffic
+KEDA receives a number = QPS. <br>
+Example: <br>
+0.00 → no traffic <br>
+0.1 → very low traffic <br>
+5.0 → heavy traffic <br>
 
-Compare value to activationThreshold in scaledObject:
+Compare value to activationThreshold in scaledObject: <br>
 ```
 activationThreshold: "0.1"
 ```
-Set minReplicaCount = 0
+Set minReplicaCount = 0 <br>
 ```
 minReplicaCount: 0
 ```
 
-So, ScaledObject it will be like:
+So, ScaledObject it will be like: <br>
 ```
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
