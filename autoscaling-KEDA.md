@@ -137,7 +137,7 @@ kubectl apply -f deployment.yaml
 
 ### servicemonitor: ( Doesn't Required )
 
-**Note: KEDA Does not require servicemonitor.** <br>
+**Note: KEDA Does not require servicemonitor. if Prometheus is not installed with helm.** <br>
 
 Prometheus ↔️ Application (requires ServiceMonitor if you want Prometheus to scrape your app) <br>
 KEDA ↔️ Prometheus (no ServiceMonitor needed) <br>
@@ -151,6 +151,20 @@ Prometheus will scrape data from service in two ways: <br>
    prometheus.io/scrape: "true"
   ```
   Then prometheus will scrape the service. No need of servicemonitor. <br>
+  Add this in service if you want to scrape with annotation. (Optional)
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastapi-sentiment-service
+  labels:
+    app: fastapi-sentiment
+
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8000"
+    prometheus.io/path: "/metrics"
+```
 
   Thats why in deployment this is mentioned. <br>
   <img width="372" height="94" alt="image" src="https://github.com/user-attachments/assets/28f4ecc8-3836-4bcd-9d47-c7c9e170fbe1" />
