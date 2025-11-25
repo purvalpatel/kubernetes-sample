@@ -296,3 +296,52 @@ kubectl port-forward -n monitoring svc/prometheus-kube-prometheus-prometheus 909
 
   By default, **kube-prometheus-stack** requires a **ServiceMonitor** or **PodMonitor**. <br>
   
+Scale to Zero:
+--------------
+KEDA polls Prometheus every 15 seconds <br>
+Using your PromQL: <br>
+```
+sum(rate(requests_total[1m]))
+```
+KEDA receives a number = QPS.
+Example:
+0.00 → no traffic
+0.1 → very low traffic
+5.0 → heavy traffic
+
+Compare value to activationThreshold in scaledObject:
+```
+activationThreshold: "0.1"
+```
+Set minReplicaCount = 0
+```
+minReplicaCount: 0
+```
+
+So, ScaledObject it will be like:
+```
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: fastapi-sentiment-keda
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: fastapi-sentiment   # your deployment name
+
+  minReplicaCount: 1
+  maxReplicaCount: 10
+
+  cooldownPeriod: 30
+  pollingInterval: 15
+
+  triggers:
+    - type: prometheus
+      metadata:
+        serverAddress: http://prometheus-kube-prometheus-prometheus.monitoring.svc:9090
+        metricName: requests_qps
+        query: |
+          sum(rate(requests_total[1m]))
+        threshold: "0.02"
+        activationThreshold: "0.1"
+```
