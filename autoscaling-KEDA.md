@@ -419,3 +419,67 @@ Verify scaling:
 kubectl get deploy fastapi-sentiment -w
 ```
 
+Scale to zero:
+--------------
+
+Install http-add-on:
+```
+helm repo add kedacore https://kedacore.github.io/charts
+helm repo update
+
+helm upgrade --install http-add-on kedacore/keda-add-ons-http \
+  --namespace keda \
+  --create-namespace \
+  --version 0.11.1
+
+```
+
+check:
+```
+kubectl get all -n keda
+```
+
+Install scaledObject:
+`scaled-object.yaml`
+```
+apiVersion: http.keda.sh/v1alpha1
+kind: HTTPScaledObject
+metadata:
+  name: project-service-scaler
+  namespace: numol
+spec:
+  hosts:
+    - project-service.numol.svc.cluster.local  # or your ingress domain
+  scaleTargetRef:
+    name: project-service
+    kind: Deployment
+    service: project-service
+    port: 8002
+
+  replicas:
+    min: 0                    # Scale to zero when no traffic
+    max: 10                   # Maximum replicas
+  targetPendingRequests: 100
+```
+
+Create External Name:
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: project-service-external
+  namespace: numol
+spec:
+  type: ExternalName
+  externalName: keda-add-ons-http-interceptor-proxy.keda.svc.cluster.local
+  ports:
+  - port: 8080
+
+```
+
+test: 
+```
+kubectl run test --image=curlimages/curl --rm -it --   curl -v -H "Host: project-service.numol.svc.cluster.local"   http://keda-add-ons-http-interceptor-proxy.keda.svc.cluster.local:8080/health
+```
+
+Now pod will spin up. and it will be there till 300 seconds.
