@@ -13,6 +13,9 @@ kubeadm token create --print-join-command
 - Recommended practice is to **generate a new token each time**
 
 3. Paste the join command on Worker node.
+```
+sudo kubeadm join x.x.x.x:6443 --token 42341f.l8xfesmkiuvv7lev --discovery-token-ca-cert-hash sha256:996c3f760f3259814fd371567b21a506496171b03d467f2ba6258e21083cf707
+```
 
 
 Remove worker node from cluster:
