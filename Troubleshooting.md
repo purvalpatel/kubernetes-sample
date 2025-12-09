@@ -1,11 +1,15 @@
 Check kubernetes components containers are running or not.
 ```
 crictl --runtime-endpoint=unix:///run/containerd/containerd.sock ps -a | egrep 'etcd|apiserver|controller|scheduler'
+OR
+sudo crictl ps -a | grep -E "(etcd|apiserver|controller-manager|scheduler)"
 ```
 
 check logs:
 ```
 sudo crictl --runtime-endpoint=unix:///run/containerd/containerd.sock logs 6dbc317cd4eb7 | tail -100
+OR
+sudo crictl logs dfea48b8b1f82
 ```
 Static pods manifests file:
 ```
