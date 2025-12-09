@@ -28,3 +28,27 @@ crictl --runtime-endpoint=unix:///run/containerd/containerd.sock stopp $(crictl 
 # Remove all pod sandboxes
 crictl --runtime-endpoint=unix:///run/containerd/containerd.sock rmp $(crictl --runtime-endpoint=unix:///run/containerd/containerd.sock pods -q) 2>/dev/null
 ```
+```
+# Find all mounted kubelet volumes
+mount | grep kubelet | awk '{print $3}' | sort -r > /tmp/kubelet_mounts.txt
+
+# Unmount them one by one
+while read mount_point; do
+  umount "$mount_point" 2>/dev/null || umount -l "$mount_point" 2>/dev/null
+done < /tmp/kubelet_mounts.txt
+
+# Force unmount any remaining
+umount -l /var/lib/kubelet/pods/*/volumes/* 2>/dev/null
+
+# Remove Kubernetes directories
+rm -rf /etc/kubernetes/
+rm -rf /var/lib/etcd/
+rm -rf ~/.kube/
+rm -rf /etc/cni/net.d/
+
+# Force remove kubelet directory (if still fails, reboot)
+rm -rf /var/lib/kubelet/ 2>/dev/null || echo "Some files still busy, will clean after reboot"
+
+# Clean up container runtime
+systemctl restart containerd
+```
