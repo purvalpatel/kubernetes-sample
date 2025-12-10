@@ -24,7 +24,12 @@ Here, <br>
 
 For example if your server have domain and SSL then you can use that Certificates. <br>
 Else Generate Certificates for 10.10.110.25.sslip.io <br>
+<br>
+<br>
+
 Below steps are optional, <br>
+<br>
+
 a. Generate Self-Signed Certificates:
 ```
 openssl req -x509 -newkey rsa:4096 -nodes -keyout tls.key -out tls.crt -days 365 \
