@@ -147,7 +147,10 @@ Then add nvidia plugins undet the runtime confiuration: [ on worker ]
     [plugins."io.containerd.grpc.v1.cri".containerd]
       default_runtime_name = "nvidia"
 ```
-
+OR You can apply below command to set nvidia-container-runtime as a default runtime for kubernetes.
+```
+sudo nvidia-ctk runtime configure --runtime=containerd --set-as-default
+```
 
 Restart the containerd and kubelet service: on worker
 ```
