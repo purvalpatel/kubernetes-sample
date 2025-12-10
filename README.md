@@ -112,6 +112,26 @@ kubectl get nodes
 kubectl get pods -A
 ```
 
+Now Create Local-Path-Provisioner:
+------------------------------
+Create Storage class:
+```
+kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml
+```
+Verify:
+```
+kubectl get storageclass
+```
+Then create the PVC storage local path,
+Note: Make sure to use this in external storage.
+```
+sudo mkdir -p /opt/local-path-provisioner
+sudo chmod 0777 /opt/local-path-provisioner
+```
+If want to change the local storage path then, change the path:
+```
+kubectl edit configmap local-path-config -n local-path-storage
+```
 Cluster management:
 ------------------
 
