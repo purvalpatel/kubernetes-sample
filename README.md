@@ -66,8 +66,9 @@ Set container runtime for kubernetes:
 Ref: https://v1-31.docs.kubernetes.io/docs/setup/production-environment/container-runtimes/
 
 Install containerd:(on both master and worker)
+Note: if containerd.io package is already there then it will fine. do not delete docker-ce if it is already installed.
 ```bash
-sudo apt install -y containerd
+sudo apt install containerd
 ```
 
 Create default config ( on master and worker )
