@@ -240,6 +240,10 @@ There is two main types of users.
 kubectl create serviceaccount my-app
 ```
 
+If you want to allow Nvidia GPU to kubernetes then follow below link,
+https://github.com/purvalpatel/kubernetes-tutorial/blob/main/NVIDIA-GPU-Pass-Kubernetes.md <br>
+
+
 
 Kubernetes Object Categories:
 ----------------------------
