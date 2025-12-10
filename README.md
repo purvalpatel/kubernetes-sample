@@ -101,12 +101,12 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 ```
 
-6.Join worker nodes:
+### Join worker nodes:
 ```
 kubeadm join <master-ip>:6443 --token <token> --discovery-token-ca-cert-hash sha256:<hash>
 ```
 
-7.Testing cluster:
+Testing cluster:
 ```
 kubectl get nodes
 kubectl get pods -A
