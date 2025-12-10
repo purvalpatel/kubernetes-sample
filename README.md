@@ -132,6 +132,14 @@ If want to change the local storage path then, change the path:
 ```
 kubectl edit configmap local-path-config -n local-path-storage
 ```
+Make it default storageclass:
+```
+# Check first
+kubectl get storageclass
+
+kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+```
+
 Cluster management:
 ------------------
 
