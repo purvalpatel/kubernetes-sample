@@ -136,3 +136,7 @@ Test the routing:
 ```
 kubectl get gateway my-gateway -n default
 ```
+
+
+Note:
+- Now if want to setup for another domain then need to create only HTTPRoute for another domain.
