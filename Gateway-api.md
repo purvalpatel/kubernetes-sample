@@ -29,6 +29,10 @@ The rest (**HTTPRoute**, **TCPRoute**, **TLSRoute**, **UDPRoute**) are **optiona
 Reference:
 http://docs.nginx.com/nginx-gateway-fabric/install/manifests/ <br>
 
+
+```
+Install CRD's -> Install Gateway Fabric -> Create Gateway Class -> Create Gateway -> Create HTTPRoute
+```
 ### STEP 1 - Install CRDs.
 Install Gateway API Resources:
 ```
