@@ -79,3 +79,60 @@ Apply:
 ```
 kubectl apply -f gateway-class.yaml
 ```
+
+### Step 3 - Create Gateway
+Create `gateway.yaml`
+```
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: my-gateway
+  namespace: default
+spec:
+  gatewayClassName: nginx
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+```
+
+Apply:
+```
+kubectl apply -f gateway.yaml
+```
+
+Verify:
+```
+kubectl get gateway -n default
+```
+### STEP 4 - Deploy your application with service.
+If your application and service is already deployed then ignore this.
+
+### STEP 5 - Create HTTPRoute.
+httproute.yaml
+```
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: demo-route
+  namespace: default
+spec:
+  parentRefs:
+    - name: my-gateway
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: demo
+          port: 80
+```
+Apply:
+```
+kubectl apply -f httproute.yaml
+```
+Test the routing:
+```
+kubectl get gateway my-gateway -n default
+```
