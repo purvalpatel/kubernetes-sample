@@ -1,9 +1,9 @@
 Introduction:
 --------------
-. Gateway API is designed for cloud environments
+**Gateway API is designed for cloud environments** <br>
 Gateway API expects: <br>
-A LoadBalancer service type (works automatically in AWS, GCP, Azure) <br>
-Or an on-premise LoadBalancer implementation like MetalLB <br>
+- A LoadBalancer service type (works automatically in AWS, GCP, Azure) <br>
+- Or an on-premise LoadBalancer implementation like MetalLB <br>
 
 **So this is not recommended aproch if you are using this in local environment.** <br>
 
@@ -199,6 +199,19 @@ Note:
 - In MetalLB loadbalancer you have to provide static IP range so load balancer will select any IP from this.
 - But my server is hosted in datacenter and i dont have any static IPs. **Alternative** of this is using **Hostnetwork**.
 - If HostNetwork doesnt works then you can use **iptables** to route port 80 on internal port.
+
+- **Gateway API is designed for cloud environments** <br>
+Gateway API expects: <br>
+- A LoadBalancer service type (works automatically in AWS, GCP, Azure) <br>
+- Or an on-premise LoadBalancer implementation like MetalLB <br>
+
+**So this is not recommended aproch if you are using this in local environment.** <br>
+
+So below are the ways we can achive: <br>
+1. MetalLB ( For On-premises servers ) but this needs load balancer.
+2. hostNetwork
+3. Host NGINX proxy
+4. Iptables redirect
 
 ```
 NODE_PORT=$(kubectl get svc nginx-gateway-nginx -n default -o jsonpath='{.spec.ports[0].nodePort}')
