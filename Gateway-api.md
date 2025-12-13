@@ -165,7 +165,8 @@ Test the routing:
 ```
 kubectl get gateway my-gateway -n default
 ```
-Test your gateway is working or not:
+### Test your gateway is working or not:
+
 Get port first `kubectl get svc -A | grep nginx-gateway` <br>
 You can provide fix port to this service (optional) testing purpose only:
 ```
@@ -175,7 +176,7 @@ kubectl patch svc nginx-gateway-nginx -n default -p '{"spec":{"ports":[{"port":8
 ```
 curl http://localhost:30506 -H "Host: milvus.xxx.xx"
 ```
-In browser: `http://milvus.nuvoai.io:30030/#/connect` <br>
+In browser: `http://milvus.xxxxx.xx:30030/#/connect` <br>
 
 
 Note:
