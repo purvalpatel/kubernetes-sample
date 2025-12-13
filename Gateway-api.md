@@ -102,14 +102,19 @@ Create `gateway.yaml`
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  name: my-gateway
-  namespace: default
+  name: nginx-gateway
+  namespace: default  # Change to your namespace if different
 spec:
   gatewayClassName: nginx
   listeners:
-    - name: http
-      protocol: HTTP
-      port: 80
+  - name: http
+    port: 80
+    protocol: HTTP
+    hostname: "*.nuvoai.io"
+    allowedRoutes:
+      namespaces:
+        from: Same
+
 ```
 
 Apply:
@@ -130,19 +135,23 @@ httproute.yaml
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: demo-route
-  namespace: default
+  name: attu-route
+  namespace: default  # Must match your service namespace
 spec:
   parentRefs:
-    - name: my-gateway
+  - name: nginx-gateway
+    namespace: default
+  hostnames:
+  - "milvus.nuvoai.io"
   rules:
-    - matches:
-        - path:
-            type: PathPrefix
-            value: /
-      backendRefs:
-        - name: demo
-          port: 80
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: attu
+      port: 3000
+
 ```
 Apply:
 ```
