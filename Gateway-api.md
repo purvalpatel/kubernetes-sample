@@ -103,17 +103,17 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: nginx-gateway
-  namespace: default  # Change to your namespace if different
+  namespace: default
 spec:
   gatewayClassName: nginx
   listeners:
   - name: http
     port: 80
     protocol: HTTP
-    hostname: "*.nuvoai.io"
+    hostname: "*.xxxxx.xx"              ## Here provide the domain name
     allowedRoutes:
       namespaces:
-        from: Same
+        from: All
 
 ```
 
@@ -131,18 +131,21 @@ If your application and service is already deployed then ignore this.
 
 ### STEP 5 - Create HTTPRoute.
 httproute.yaml
+- Please note to create **HTTPRoute inside the namespace** where your appliction service is running.
+- Here, Namespace is "milvus"
+- We want to route the traffic on 3000 port for attu service which is running inside the milvus namespace.
 ```
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: attu-route
-  namespace: default  # Must match your service namespace
+  namespace: milvus  # Must match your service namespace
 spec:
   parentRefs:
   - name: nginx-gateway
     namespace: default
   hostnames:
-  - "milvus.nuvoai.io"
+  - "milvus.xxxx.xx"
   rules:
   - matches:
     - path:
@@ -151,6 +154,7 @@ spec:
     backendRefs:
     - name: attu
       port: 3000
+
 
 ```
 Apply:
@@ -161,7 +165,10 @@ Test the routing:
 ```
 kubectl get gateway my-gateway -n default
 ```
-
+Test your gateway is working or not:
+```
+curl http://localhost:30506 -H "Host: milvus.xxx.xx"
+```
 
 Note:
 - Now if want to setup for another domain then need to create only HTTPRoute for another domain.
