@@ -178,6 +178,8 @@ curl http://localhost:30506 -H "Host: milvus.xxx.xx"
 ```
 In browser: `http://milvus.xxxxx.xx:30030/#/connect` <br>
 
+<img width="1919" height="1068" alt="image" src="https://github.com/user-attachments/assets/c15170f9-1c49-430b-bee7-386d42d99778" />
+
 
 Note:
 - Now if want to setup for another domain then need to create only HTTPRoute for another domain.
