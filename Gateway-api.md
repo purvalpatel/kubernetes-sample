@@ -191,3 +191,10 @@ Note:
 - In MetalLB loadbalancer you have to provide static IP range so load balancer will select any IP from this.
 - But my server is hosted in datacenter and i dont have any static IPs. **Alternative** of this is using **Hostnetwork**.
 - If HostNetwork doesnt works then you can use **iptables** to route port 80 on internal port.
+
+```
+NODE_PORT=$(kubectl get svc nginx-gateway-nginx -n default -o jsonpath='{.spec.ports[0].nodePort}')
+echo "NodePort is: $NODE_PORT"
+NodePort is: 30030
+sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port $NODE_PORT
+```
