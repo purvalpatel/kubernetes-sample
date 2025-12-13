@@ -1,5 +1,13 @@
 Introduction:
 --------------
+. Gateway API is designed for cloud environments
+Gateway API expects: <br>
+A LoadBalancer service type (works automatically in AWS, GCP, Azure) <br>
+Or an on-premise LoadBalancer implementation like MetalLB <br>
+
+**So this is not recommended aproch if you are using this in local environment.** <br>
+
+
 Kubernetes originally used **Ingress** to manage L7 (HTTP/HTTPS) traffic into the cluster. <br>
 But **Ingress had limitations** → confusing annotations, no standard features across vendors, weak TCP/UDP support. <br>
 
