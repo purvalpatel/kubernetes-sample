@@ -33,6 +33,18 @@ http://docs.nginx.com/nginx-gateway-fabric/install/manifests/ <br>
 ```
 Install CRD's -> Install Gateway Fabric -> Create Gateway Class -> Create Gateway -> Create HTTPRoute
 ```
+### How it works ?
+```
+Internet Traffic
+       ↓
+   Gateway (nginx-gateway)  ← Listens on port 80
+       ↓
+   HTTPRoute (attu-route)   ← Routing rules
+       ↓
+   Service (attu)           ← Your backend service
+       ↓
+   Pods                     ← Your application
+```
 ### STEP 1 - Install CRDs.
 Install Gateway API Resources:
 ```
