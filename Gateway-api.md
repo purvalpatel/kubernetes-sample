@@ -207,3 +207,10 @@ Delete rule:
 sudo iptables -t nat -D PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 30030
 
 ```
+
+Add rule for localhost traffic:
+```
+sudo iptables -t nat -A OUTPUT -p tcp --dport 80 -j REDIRECT --to-port 30030
+# Verify both rules are present
+sudo iptables -t nat -L OUTPUT -n -v | grep 30030
+```
