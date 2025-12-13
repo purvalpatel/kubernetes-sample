@@ -183,3 +183,8 @@ In browser: `http://milvus.xxxxx.xx:30030/#/connect` <br>
 
 Note:
 - Now if want to setup for another domain then need to create only HTTPRoute for another domain.
+
+
+
+## issue:
+- In production i dont want to open application with custom port. i want that it will open directly with the domain. for that need to use MetalLB Load balancer so the IP of load balancer will be fixed and you have to redirect domain to the external IP of load balancer.
