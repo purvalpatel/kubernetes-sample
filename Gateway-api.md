@@ -175,6 +175,8 @@ kubectl patch svc nginx-gateway-nginx -n default -p '{"spec":{"ports":[{"port":8
 ```
 curl http://localhost:30506 -H "Host: milvus.xxx.xx"
 ```
+In browser: `http://milvus.nuvoai.io:30030/#/connect` <br>
+
 
 Note:
 - Now if want to setup for another domain then need to create only HTTPRoute for another domain.
