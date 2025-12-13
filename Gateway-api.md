@@ -198,3 +198,12 @@ echo "NodePort is: $NODE_PORT"
 NodePort is: 30030
 sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port $NODE_PORT
 ```
+verify rule is created or not:
+```
+sudo iptables -t nat -L PREROUTING -n -v
+```
+Delete rule:
+```
+sudo iptables -t nat -D PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 30030
+
+```
