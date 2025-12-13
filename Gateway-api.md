@@ -187,4 +187,6 @@ Note:
 
 
 ## issue:
-- In production i dont want to open application with custom port. i want that it will open directly with the domain. for that need to use MetalLB Load balancer so the IP of load balancer will be fixed and you have to redirect domain to the external IP of load balancer.
+- In production i dont want to open application with custom port. i want that it will open directly with the domain. for that need to use **MetalLB Load balancer** so the IP of load balancer will be fixed and you have to **redirect domain to the external IP of load balancer**.
+- In MetalLB loadbalancer you have to provide static IP range so load balancer will select any IP from this.
+- But my server is hosted in datacenter and i dont have any static IPs. **Alternative** of this is using **Hostnetwork**.
