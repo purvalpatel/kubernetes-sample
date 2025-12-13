@@ -166,6 +166,8 @@ Test the routing:
 kubectl get gateway my-gateway -n default
 ```
 Test your gateway is working or not:
+Get port first `kubectl get svc -A | grep nginx-gateway` <br>
+
 ```
 curl http://localhost:30506 -H "Host: milvus.xxx.xx"
 ```
