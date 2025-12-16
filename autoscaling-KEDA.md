@@ -513,3 +513,34 @@ xxxx-frontend1 Service
  ↓
 xxxx-frontend1 Pod
 ```
+
+
+Cron Scaling:
+-----------
+- Scaled up.down based on time
+- Independent of CPU/memory
+This is used for:
+- Night time
+- Weekend
+- Office hours worjloads.
+
+ScaledObject.yaml
+```
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: sbdd-frontend-cron
+  namespace: numol
+spec:
+  scaleTargetRef:
+    name: sbdd-frontend
+  minReplicaCount: 1
+  maxReplicaCount: 5
+  triggers:
+  - type: cron
+    metadata:
+      timezone: Asia/Kolkata
+      start: "0 9 * * *"     # 9 AM
+      end:   "0 21 * * *"    # 9 PM
+      desiredReplicas: "3"
+```
