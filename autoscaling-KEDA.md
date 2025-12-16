@@ -439,47 +439,77 @@ check:
 kubectl get all -n keda
 ```
 
-Install scaledObject:
-`scaled-object.yaml`
+Create `HTTPScaledObject.yaml`.
+
 ```
 apiVersion: http.keda.sh/v1alpha1
 kind: HTTPScaledObject
 metadata:
-  name: project-service-scaler
+  name: sbdd-frontend1-scale
   namespace: numol
 spec:
-  hosts:
-    - project-service.numol.svc.cluster.local  # or your ingress domain
   scaleTargetRef:
-    name: project-service
-    kind: Deployment
-    service: project-service
-    port: 8002
+    name: sbdd-frontend1
+    service: sbdd-frontend1    # ✅ moved here
+    port: 3000
+
+  hosts:
+  - "10.10.110.25:30033"
 
   replicas:
-    min: 0                    # Scale to zero when no traffic
-    max: 10                   # Maximum replicas
-  targetPendingRequests: 100
-```
+    min: 0
+    max: 2
 
-Create External Name:
+  # 🔹 Request presence (yes/no)
+  targetPendingRequests: 1
+
+  # 🔹 Idle duration
+  scaledownPeriod: 180
+
+```
+Create `Keda-HTTP-proxy.yaml`
 ```
 apiVersion: v1
 kind: Service
 metadata:
-  name: project-service-external
-  namespace: numol
+  name: keda-http-interceptor-nodeport
+  namespace: keda
 spec:
-  type: ExternalName
-  externalName: keda-add-ons-http-interceptor-proxy.keda.svc.cluster.local
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: http-add-on
   ports:
-  - port: 8080
-
+  - name: http
+    port: 8080
+    targetPort: 8080
+    nodePort: 30033
+```
+Apply:
+```
+kubectl apply -f http-scaled-object.yaml
+kubectl apply -f keda-HTTP-proxy.yaml
 ```
 
-test: 
+### test: 
+Ine browser open link,
 ```
-kubectl run test --image=curlimages/curl --rm -it --   curl -v -H "Host: project-service.numol.svc.cluster.local"   http://keda-add-ons-http-interceptor-proxy.keda.svc.cluster.local:8080/health
+http://server-ip:30033
 ```
 
 Now pod will spin up. and it will be there till 300 seconds.
+
+Troubleshooting:
+1. Request flow
+```
+Browser (Host: xx.xx.xxx.xx)
+ ↓
+NodeIP:30033
+ ↓
+keda-add-ons-http-interceptor
+ ↓
+HTTPScaledObject (host match ✅)
+ ↓
+xxxx-frontend1 Service
+ ↓
+xxxx-frontend1 Pod
+```
