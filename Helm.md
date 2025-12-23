@@ -53,3 +53,40 @@ myapp/
 - The `values.yaml` file holds the default configuration values for your chart. Modify it to reflect the settings for your application.
 - set Docker image details ( `repository` and `tag`)
 - Define `service ports`, `replicas`, and other configurations
+
+### Edit Kubernetes Manifests in `templates` Directory
+- `deployment.yaml` for deployment configurations.
+- `service.yaml` for exposing your applications.
+- Additional YAML files if you need specific resources like `ConfigMaps`, `Ingress` or `secrets`.
+
+
+### Package and install helm chart
+Create Package:
+```
+helm package myapp
+```
+
+Install:
+```
+helm install myapp ./myapp -n test
+```
+
+Verify the deployment:
+```
+kubectl get pods
+kubectl get pvc
+```
+
+Upgrade it:
+```
+helm upgrade myapp ./myapp
+```
+
+Uninstall (For Information purpose only.)
+```
+helm uninstall myapp
+```
+
+`values.yaml`: Default values for your chart. <br>
+`templates/`: Directory containing Kubernetes manifests for deployment, service, and other resources. <br>
+`Chart.yaml`: Metadata about the chart (name, version, etc.). <br>
