@@ -3,7 +3,7 @@ kind: Config
 clusters:
 - name: kubernetes
   cluster:
-    server: https://kube.nuvoai.io
+    server: https://xxxx.xxxx.xx
     insecure-skip-tls-verify: true
 
 contexts:
